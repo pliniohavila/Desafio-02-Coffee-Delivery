@@ -1,4 +1,4 @@
-import { createContext, useReducer, ReactNode, useState, useEffect } from "react";
+import { createContext, useReducer, ReactNode, useState, useEffect, useMemo } from "react";
 import { cartReducer } from "../reducers/CartReducer";
 
 type TDataProduct = {
@@ -74,14 +74,14 @@ export function CartContextProvider({children}: CartContextProviderProps) {
     setCartQuantityItems(count);
   }, [state]);
 
-  const valueProvider = {
+  const valueProvider = useMemo(() => ({
     cartQuantityItems,
     itemsCart: state,
     addItem,
     increaseItem,
     decreaseItem,
     removeItem
-  };
+  }), [state, cartQuantityItems]);
 
   return (
    <CartContext.Provider value={valueProvider}>
